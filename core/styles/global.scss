@@ -1,0 +1,36 @@
+@import "mixins";
+
+* {
+  @include adaptiveFont(24, 16);
+  color: #333333;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  background: #333333;
+}
+
+.large-container {
+  width: 100%;
+  max-width: 1278px;
+  padding: 0 19px;
+  margin: 0 auto;
+}
+
+.small-container {
+  width: 100%;
+  max-width: 890px;
+  padding: 0 19px;
+  margin: 0 auto;
+}
+
+.main {
+  min-height: 101vh;
+  background: white;
+  transform-origin: top;
+  padding-bottom: 120px;
+}
