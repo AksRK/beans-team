@@ -2,6 +2,7 @@
 
 .page-wrp {
   position: relative;
+  z-index: 1;
   height: 100vh;
   overflow-y: scroll;
   transition: transform 0.3s ease-in-out, border-radius 0.8s ease-in-out;
