@@ -39,7 +39,9 @@ module.exports = {
         'no-console': ['off'],
         'react-hooks/exhaustive-deps': ['off'],
         'prefer-spread': ['off'],
-        'eslint-disable-next-line': 'off',
+        'react/jsx-no-undef': 'off',
+        'react/display-name': 'off',
+        'eslint-disable-next-line': ['off']
     },
     ignorePatterns: ['.eslintrc.js', 'node_modules', 'lib', 'dir'],
     settings: {
