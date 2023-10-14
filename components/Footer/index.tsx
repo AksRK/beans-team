@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { forwardRef } from 'react';
 const roboto = Roboto({ weight: '300', subsets: ['cyrillic'] });
 import { motion } from 'framer-motion';
+import { founder_1 } from '@/core/constants/founders';
 
 interface IFooterProps {
   isVisible: boolean;
@@ -24,7 +25,7 @@ const Footer = forwardRef<HTMLDivElement, IFooterProps>(({ isVisible }, forwarde
             <div className={'founders-help'}>
               <div className={'founders-help__image'}>
                 <Image
-                  src={'/founders/founder_1.jpeg'}
+                  src={founder_1.imagePath}
                   alt={'123'}
                   fill={true}
                   sizes={'(max-width: 576px) 100vw,'}
@@ -33,7 +34,7 @@ const Footer = forwardRef<HTMLDivElement, IFooterProps>(({ isVisible }, forwarde
               </div>
               <div className={'founders-help__text'}>
                 <span>Нужна помощь в принятии решения?</span>
-                <a target={'_blank'} rel={'noreferrer'} href={'https://t.me/German_Bobnev'}>
+                <a target={'_blank'} rel={'noreferrer'} href={founder_1.telegram}>
                   Написать в Telegram
                 </a>
               </div>
