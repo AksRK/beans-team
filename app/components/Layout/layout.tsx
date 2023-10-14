@@ -8,6 +8,7 @@ import { m, AnimatePresence, useInView, LazyMotion, domAnimation } from 'framer-
 import { usePathname } from 'next/navigation';
 import Footer from '@/components/Footer';
 import SolutionsPage from '@/app/solutions/page';
+import PageNav from '@/components/PageNav';
 
 export default function RootClientLayout({ children }: { children: ReactNode }) {
   const footerRef = useRef<HTMLDivElement>(null);
@@ -64,6 +65,7 @@ export default function RootClientLayout({ children }: { children: ReactNode }) 
   return (
     <>
       <div
+        id={'page'}
         ref={pageWrpRef}
         className={`page-wrp ${isStartAnimation ? 'page-wrp--hidden' : ''} ${
           markInView ? 'page-wrp--view-footer' : ''
@@ -96,6 +98,7 @@ export default function RootClientLayout({ children }: { children: ReactNode }) 
         <div ref={markRef} className={'page-wrp__mark'}></div>
       </div>
       <Footer ref={footerRef} isVisible={markInView} />
+      <PageNav isVisible={markInView} />
     </>
   );
 }
