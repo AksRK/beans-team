@@ -1,0 +1,82 @@
+@import "core/styles/mixins";
+
+.how-we-work {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.how-we-work-list {
+  max-width: 530px;
+  width: 100%;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  @media (max-width: 776px) {
+    max-width: 100%;
+  }
+
+  @include mobile {
+    gap: 10px;
+  }
+
+  & li {
+    width: 100%;
+    position: relative;
+    border-radius: 11px;
+    border: 1px solid #ECECEC;
+    background: #F1F6F8;
+    padding: 20px 20px 20px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out;
+
+    & div {
+      max-width: 438px;
+
+      @include mobile {
+        max-width: 270px;
+      }
+    }
+
+    & div span:first-child{
+      position: relative;
+
+      &::before {
+        content: '';
+        width: 4px;
+        height: 4px;
+        background-color: #333;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-30%);
+        left: -15px;
+      }
+    }
+  }
+
+  &--their-method {
+    & li {
+      &:nth-child(odd) {
+        background: #FFBEBE;
+        border-color: #ECECEC;
+      }
+    }
+  }
+
+  &__red-text {
+    color: #FF0200;
+    text-decoration: none!important;
+  }
+
+  &__through-text {
+    text-decoration: line-through #FF0200;
+  }
+}
