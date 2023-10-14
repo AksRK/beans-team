@@ -10,12 +10,10 @@ import { m } from 'framer-motion';
 export default function Home() {
   const optionsBox_1 = {
     animationData: desktop_1_Animation,
-    loop: true,
   };
 
   const optionsBox_2 = {
     animationData: desktop_2_Animation,
-    loop: true,
   };
   const box_1_animation = useLottie(optionsBox_1);
   const box_2_animation = useLottie(optionsBox_2);
