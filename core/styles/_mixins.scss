@@ -1,10 +1,16 @@
 @import "variables";
 
 @mixin mobile {
-  @media (max-width: 576px) {
+  @media (max-width: $mobile-width) {
     @content;
   }
 }
+@mixin tablet {
+  @media (max-width: $tablet-width) {
+    @content;
+  }
+}
+
 
 @mixin adaptiveFont($pcSize, $mobSize) {
   $addSize: $pcSize - $mobSize;
@@ -14,5 +20,13 @@
   }
   @media (max-width: #{$maxWidth + px}) {
     font-size: calc(#{$mobSize + px} + #{$addMobSize} * ((100vw - 320px) / #{$maxWidth}));
+  }
+}
+
+@mixin hover {
+  @media (hover: hover) {
+    &:hover {
+      @content;
+    }
   }
 }
