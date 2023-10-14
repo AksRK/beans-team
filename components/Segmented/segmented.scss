@@ -1,0 +1,36 @@
+@import "core/styles/mixins";
+
+.segmented {
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+  border-radius: 25px;
+  background: #F1F6F8;
+  padding: 3px;
+  display: flex;
+  justify-content: flex-start;
+  gap: 5px;
+  z-index: 1;
+
+  &__mark {
+    position: absolute;
+    border-radius: 35px;
+    background: #333;
+    z-index: 0;
+    transition: left 0.3s ease-in-out, width 0.3s ease-in-out, background 0.3s ease-in-out;
+  }
+
+  &__item {
+    padding: 12px;
+    user-select: none;
+    cursor: pointer;
+    z-index: 2;
+    white-space: nowrap;
+    transition: color 0.2s ease-in-out;
+    @include adaptiveFont(20, 13);
+
+    &--active {
+      color: #fff;
+    }
+  }
+}
