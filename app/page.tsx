@@ -5,7 +5,6 @@ import Title from '@/components/UI/Title';
 import desktop_1_Animation from './components/animations/desktop-1.json';
 import desktop_2_Animation from './components/animations/desktop-2.json';
 import { useLottie } from 'lottie-react';
-import { m } from 'framer-motion';
 
 export default function Home() {
   const optionsBox_1 = {
@@ -29,18 +28,14 @@ export default function Home() {
         </p>
       </section>
       <section className={'large-container'}>
-        <m.div
-          animate={{ y: 0, opacity: [0, 1] }}
-          transition={{ y: { from: 400, duration: 0.7 }, duration: 0.6, delay: 0.2 }}
-          className={'links-box-wrp'}
-        >
+        <div className={'links-box-wrp'}>
           <Link href={'/about-team'} className={'link-box-wrp'}>
             <div className={'link-box link-box--bg-dark'}>{box_1_animation.View}</div>
           </Link>
           <Link href={'/solutions'} className={'link-box-wrp'}>
             <div className={'link-box link-box--bg-primary'}>{box_2_animation.View}</div>
           </Link>
-        </m.div>
+        </div>
       </section>
     </>
   );
