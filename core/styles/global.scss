@@ -33,4 +33,8 @@ body {
   background: white;
   transform-origin: top;
   padding-bottom: 120px;
+
+  @include mobile {
+    padding-bottom: 20px;
+  }
 }
