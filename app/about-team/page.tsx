@@ -4,34 +4,16 @@ import Title from '@/components/UI/Title';
 import Link from 'next/link';
 import Image from 'next/image';
 import { founder_1, founder_2 } from '@/core/constants/founders';
-import { AnimatePresence, m, useInView } from 'framer-motion';
+import { AnimatePresence, m } from 'framer-motion';
 import HowWeWork from '@/app/about-team/components/HowWeWork';
 import { reviews } from '@/app/about-team/mock/reviews.mock';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import ScrollableSegmentedControl from '@/components/ScrollableSegmented';
 import { ourApproachItems, ourApproachThemes } from '@/app/about-team/mock/our-approach.mock';
 
 const AboutTeamPage = () => {
-  const [reviewsList, setReviewsList] = useState<typeof reviews>([]);
-  const reviewsRef = useRef<HTMLDivElement | null>(null);
-  const reviewsInView = useInView(reviewsRef, { margin: '0px 0px -400px 0px', once: true });
-  const [isReviewAnimated, setIsReviewAnimated] = useState(false);
-  const [currentReviewIndex, setCurrentReviewIndex] = useState(0);
   const [selectedOurApproachTheme, setSelectedOurApproachTheme] = useState(ourApproachThemes[0]);
-
-  useEffect(() => {
-    if (reviewsInView && !isReviewAnimated && reviewsList.length + 1 <= reviews.length) {
-      const reviewTimer = setTimeout(
-        () => {
-          setReviewsList(prevState => [...prevState, reviews[currentReviewIndex]]);
-          setCurrentReviewIndex(prevState => prevState + 1);
-        },
-        currentReviewIndex === 0 ? 300 : 2000
-      );
-
-      return () => clearTimeout(reviewTimer);
-    }
-  }, [reviewsInView, isReviewAnimated]);
+  const [ourApproachAnimationInProgress, setOurApproachAnimationInProgress] = useState(false);
 
   const navLinks = [
     { path: '#about-team', text: 'Кто руководит' },
@@ -105,11 +87,7 @@ const AboutTeamPage = () => {
           загрузки. А для более быстрого старта мы используем традиционный стек.
         </p>
       </section>
-      <m.section
-        animate={{ y: 0, opacity: [0, 1] }}
-        transition={{ y: { from: 400, duration: 0.7 }, duration: 0.6, delay: 0.2 }}
-        className={'about-team-founders-wrp'}
-      >
+      <section className={'about-team-founders-wrp'}>
         <div id={'about-team'} className={'small-container'}>
           <Title className={'about-team-founders-title'} color={'white'}>
             Кто руководит командой
@@ -143,7 +121,7 @@ const AboutTeamPage = () => {
             </p>
           </div>
         </div>
-      </m.section>
+      </section>
       <section>
         <div id={'how-we-work'} className={'small-container'}>
           <Title>Как мы работаем</Title>
@@ -154,6 +132,7 @@ const AboutTeamPage = () => {
         <div id={'our-approach'} className={'small-container'}>
           <Title className={'about-team-our-approach-title'}>Наш подход к вашей задаче</Title>
           <ScrollableSegmentedControl
+            disabled={ourApproachAnimationInProgress}
             onChange={handleChangeOurApproachTheme}
             defaultSelected={selectedOurApproachTheme}
             items={ourApproachThemes}
@@ -167,6 +146,8 @@ const AboutTeamPage = () => {
                 animate={'animate'}
                 exit={'exit'}
                 key={selectedOurApproachTheme}
+                onAnimationStart={() => setOurApproachAnimationInProgress(true)}
+                onAnimationComplete={() => setOurApproachAnimationInProgress(false)}
               >
                 {ourApproachItems[selectedOurApproachTheme].map((item, index) => (
                   <li key={'ourApproachItem_' + index}>{item}</li>
@@ -177,52 +158,25 @@ const AboutTeamPage = () => {
         </div>
       </section>
       <section>
-        <div id={'reviews'} className={'small-container'} ref={reviewsRef}>
+        <div id={'reviews'} className={'small-container'}>
           <Title className={'about-team-reviews-title'}>Отзывы, которые люди написали сами</Title>
           <ul className={'about-team-reviews-wrp'}>
-            <AnimatePresence>
-              {reviewsList.map((review, index) => (
-                <m.li key={'review_' + index} className={'about-team-review'}>
-                  <m.div
-                    initial={{ opacity: 0, x: 330 }}
-                    animate={
-                      reviewsInView && {
-                        opacity: 1,
-                        x: 0,
-                        transition: { ease: 'easeOut', duration: 0.6 },
-                      }
-                    }
-                    onAnimationStart={() => setIsReviewAnimated(true)}
-                    onAnimationComplete={() => setIsReviewAnimated(false)}
-                    className={'about-team-reviewer'}
-                  >
-                    <div className={'about-team-reviewer__img'}>
-                      <Image src={review.user.image} alt={review.user.image} fill={true} />
-                    </div>
-                    <div className={'about-team-reviewer__info'}>
-                      {`${review.user.fullName}, `}
-                      <a href={review.company.link} target={'_blank'} rel={'nofollow noopener noreferrer'}>
-                        {review.company.name}
-                      </a>
-                    </div>
-                  </m.div>
-                  <m.div
-                    initial={{
-                      opacity: 0,
-                      scale: 0,
-                    }}
-                    animate={{
-                      opacity: 1,
-                      scale: 1,
-                      transition: { ease: 'easeInOut', duration: 1, delay: 0.5 },
-                    }}
-                    className={'about-team-review__details'}
-                  >
-                    {review.review}
-                  </m.div>
-                </m.li>
-              ))}
-            </AnimatePresence>
+            {reviews.map((review, index) => (
+              <li key={'review_' + index} className={'about-team-review'}>
+                <div className={'about-team-reviewer'}>
+                  <div className={'about-team-reviewer__img'}>
+                    <Image src={review.user.image} alt={review.user.image} fill={true} />
+                  </div>
+                  <div className={'about-team-reviewer__info'}>
+                    {`${review.user.fullName}, `}
+                    <a href={review.company.link} target={'_blank'} rel={'nofollow noopener noreferrer'}>
+                      {review.company.name}
+                    </a>
+                  </div>
+                </div>
+                <div className={'about-team-review__details'}>{review.review}</div>
+              </li>
+            ))}
           </ul>
         </div>
       </section>
