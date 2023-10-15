@@ -4,27 +4,30 @@ import Segmented from '@/components/Segmented';
 import Button from '@/components/UI/Button';
 import { FC, useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface IPageNav {
   isVisible: boolean;
+  disabled: boolean;
 }
 
-const PageNav: FC<IPageNav> = ({ isVisible }) => {
+const PageNav: FC<IPageNav> = ({ isVisible, disabled }) => {
   const pathName = usePathname();
   const router = useRouter();
   const routes = [
-    { name: 'Бинс', path: '/' },
+    { name: 'Бинс', path: '/about-team' },
     { name: 'Наши решения', path: '/solutions' },
   ];
 
   const [selectedOption, setSelectedOption] = useState<string>('Бинс');
 
   const followLink = (option: string) => {
-    setSelectedOption(option);
-    const selectedRoute = routes.find(route => route.name === option);
-    if (selectedRoute) {
-      router.push(selectedRoute.path);
+    if (!disabled) {
+      setSelectedOption(option);
+      const selectedRoute = routes.find(route => route.name === option);
+      if (selectedRoute) {
+        router.push(selectedRoute.path);
+      }
     }
   };
 
@@ -33,28 +36,45 @@ const PageNav: FC<IPageNav> = ({ isVisible }) => {
     if (selectedRoute) {
       setSelectedOption(selectedRoute.name);
     }
-  }, [pathName]);
+  }, [pathName, isVisible]);
 
   const animationVariants = {
+    initial: {
+      bottom: -100,
+    },
     animate: {
-      bottom: !isVisible ? 20 : -100,
+      bottom: 20,
       transition: {
-        bottom: { duration: 0.6, delay: !isVisible ? 0.5 : 0.1 },
+        bottom: { duration: 0.6, delay: isVisible ? 0.3 : 0.2 },
       },
+    },
+    exit: {
+      bottom: -100,
     },
   };
 
   return (
-    <motion.div animate={'animate'} variants={animationVariants} className={'page-nav-wrp'}>
-      <Segmented
-        rootClassName={'page-nav--backdrop-blur'}
-        options={routes.map(route => route.name)}
-        defaultSelected={selectedOption}
-        onChange={followLink}
-      >
-        <Button>Обсудить проект</Button>
-      </Segmented>
-    </motion.div>
+    <AnimatePresence>
+      {isVisible && routes.map(route => route.path).includes(pathName) && (
+        <motion.div
+          initial={'initial'}
+          animate={'animate'}
+          exit={'exit'}
+          variants={animationVariants}
+          className={'page-nav-wrp'}
+        >
+          <Segmented
+            disabled={disabled}
+            rootClassName={'page-nav--backdrop-blur'}
+            options={routes.map(route => route.name)}
+            defaultSelected={selectedOption}
+            onChange={followLink}
+          >
+            <Button>Обсудить проект</Button>
+          </Segmented>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 };
 
