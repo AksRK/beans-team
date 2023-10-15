@@ -36,7 +36,7 @@ export default function RootClientLayout({ children }: { children: ReactNode }) 
   const variants = {
     initial: {
       y: '100vh',
-      borderRadius: '30px',
+      borderRadius: '40px',
       transition: {
         duration: 0,
       },
@@ -45,19 +45,20 @@ export default function RootClientLayout({ children }: { children: ReactNode }) 
       borderRadius: 0,
       y: 0,
       transition: {
-        y: { duration: 0.5 },
-        borderRadius: { duration: 1, delay: 0.3 },
+        y: { duration: 0.7 },
+        borderRadius: { duration: 0.5, delay: 0.3 },
       },
     },
     exit: {
       opacity: 0.1,
       borderRadius: '30px',
-      y: '70px',
-      scale: 0.9,
+      y: '170px',
       transition: {
+        duration: 0.7,
+        borderRadius: {
+          duration: 0.3,
+        },
         ease: 'easeInOut',
-        scale: { duration: 0.7 },
-        borderRadius: { duration: 0 },
       },
     },
   };
@@ -98,7 +99,7 @@ export default function RootClientLayout({ children }: { children: ReactNode }) 
         <div ref={markRef} className={'page-wrp__mark'}></div>
       </div>
       <Footer ref={footerRef} isVisible={markInView} />
-      <PageNav isVisible={markInView} />
+      <PageNav isVisible={!markInView} disabled={isStartAnimation} />
     </>
   );
 }
