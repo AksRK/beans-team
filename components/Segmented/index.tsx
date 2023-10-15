@@ -9,8 +9,9 @@ interface ISegmented {
   onChange?: (selectedOption: string) => void;
   children?: ReactNode;
   rootClassName?: string;
+  disabled?: boolean;
 }
-const Segmented: FC<ISegmented> = ({ options, defaultSelected, onChange, children, rootClassName }) => {
+const Segmented: FC<ISegmented> = ({ options, defaultSelected, onChange, children, rootClassName, disabled }) => {
   const { width, height } = useWindowSize();
   const [checked, setChecked] = useState<string>(defaultSelected);
   const segmentedRef = useRef<HTMLDivElement | null>(null);
@@ -36,10 +37,12 @@ const Segmented: FC<ISegmented> = ({ options, defaultSelected, onChange, childre
   };
 
   const handleSelectItem = (value: string, index: number) => {
-    setChecked(value);
-    updateActiveItemStyles(index);
-    if (onChange) {
-      onChange(value);
+    if (!disabled) {
+      setChecked(value);
+      updateActiveItemStyles(index);
+      if (onChange) {
+        onChange(value);
+      }
     }
   };
 

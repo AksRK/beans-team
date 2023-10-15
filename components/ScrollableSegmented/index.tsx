@@ -10,8 +10,14 @@ interface IScrollableSegmentedControl {
   items: string[];
   defaultSelected: string;
   onChange?: (selectedOption: string) => void;
+  disabled?: boolean;
 }
-const ScrollableSegmentedControl: FC<IScrollableSegmentedControl> = ({ items, defaultSelected, onChange }) => {
+const ScrollableSegmentedControl: FC<IScrollableSegmentedControl> = ({
+  items,
+  defaultSelected,
+  onChange,
+  disabled,
+}) => {
   const scrollableContainerRef = useRef<HTMLDivElement | null>(null);
   const [showRightScrollButton, setShowRightScrollButton] = useState(true);
 
@@ -108,6 +114,7 @@ const ScrollableSegmentedControl: FC<IScrollableSegmentedControl> = ({ items, de
         }
       >
         <Segmented
+          disabled={disabled}
           rootClassName={'scrollable-items-container'}
           onChange={onChange}
           options={items}
