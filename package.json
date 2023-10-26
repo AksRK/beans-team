@@ -13,6 +13,7 @@
     "framer-motion": "^10.16.4",
     "lottie-react": "^2.4.0",
     "next": "13.5.4",
+    "nodemailer": "^6.9.7",
     "normalize.css": "^8.0.1",
     "prettier": "^3.0.3",
     "react": "^18",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "@types/node": "^20",
+    "@types/nodemailer": "^6.4.13",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
