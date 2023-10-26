@@ -9,6 +9,8 @@ import { usePathname } from 'next/navigation';
 import Footer from '@/components/Footer';
 import SolutionsPage from '@/app/solutions/page';
 import PageNav from '@/components/PageNav';
+import ModalContainer from '@/components/UI/ModalContainer';
+import DiscussFormModal from '@/components/DiscussFormModal';
 
 export default function RootClientLayout({ children }: { children: ReactNode }) {
   const footerRef = useRef<HTMLDivElement>(null);
@@ -100,6 +102,8 @@ export default function RootClientLayout({ children }: { children: ReactNode }) 
       </div>
       <Footer ref={footerRef} isVisible={markInView} />
       <PageNav isVisible={!markInView} disabled={isStartAnimation} />
+      <DiscussFormModal />
+      <ModalContainer />
     </>
   );
 }
