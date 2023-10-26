@@ -1,9 +1,7 @@
 'use client';
 import './footer.scss';
-import { Roboto } from 'next/font/google';
 import Image from 'next/image';
 import { forwardRef } from 'react';
-const roboto = Roboto({ weight: '300', subsets: ['cyrillic'] });
 import { motion } from 'framer-motion';
 import { founder_1 } from '@/core/constants/founders';
 
@@ -15,7 +13,7 @@ const Footer = forwardRef<HTMLDivElement, IFooterProps>(({ isVisible }, forwarde
   return (
     <>
       <div className={'footer-wrp'}>
-        <div className={'large-container ' + roboto.className}>
+        <div className={'large-container'}>
           <motion.footer
             ref={forwardedRef}
             animate={isVisible ? { opacity: 1 } : { opacity: 0 }}
