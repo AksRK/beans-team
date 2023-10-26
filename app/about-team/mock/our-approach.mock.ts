@@ -1,3 +1,5 @@
+import { EOurApproachPopUpsKeys } from '@/app/about-team/page';
+
 export const ourApproachThemes = [
   '1. Понимание задачи',
   '2. Проблема',
@@ -9,7 +11,7 @@ export const ourApproachThemes = [
 
 export const ourApproachItems = {
   [ourApproachThemes[0]]: [
-    '⋅ Задаем вопросы.',
+    { text: 'Задаем вопросы.', popUp: EOurApproachPopUpsKeys?.QUESTIONS },
     '⋅ Обсуждаем задачи.',
     '⋅ Обсуждаем задачи.',
     '⋅ Закрепляем бизнес-цели.',
