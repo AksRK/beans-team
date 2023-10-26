@@ -141,9 +141,7 @@
 
   &-our-approach-list {
     transform-origin: right;
-    list-style: none;
     margin: 20px 0 0 0;
-    padding: 0;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -151,6 +149,16 @@
     @include mobile {
       gap: 7px;
     }
+  }
+
+  &-our-approach-btn {
+    padding: 0;
+    background: none;
+    border: none;
+    width: fit-content;
+    cursor: pointer;
+    text-decoration: underline dotted #8D8D8D;
+    text-underline-offset: 5px;
   }
 
   &-reviews-title {
