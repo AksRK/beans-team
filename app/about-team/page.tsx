@@ -10,10 +10,17 @@ import { reviews } from '@/app/about-team/mock/reviews.mock';
 import { useState } from 'react';
 import ScrollableSegmentedControl from '@/components/ScrollableSegmented';
 import { ourApproachItems, ourApproachThemes } from '@/app/about-team/mock/our-approach.mock';
+import QuestionsPopUp from '@/app/about-team/components/QuestionsPopUp';
+
+export enum EOurApproachPopUpsKeys {
+  QUESTIONS = 'QUESTIONS',
+}
 
 const AboutTeamPage = () => {
   const [selectedOurApproachTheme, setSelectedOurApproachTheme] = useState(ourApproachThemes[0]);
   const [ourApproachAnimationInProgress, setOurApproachAnimationInProgress] = useState(false);
+  const [popUpState, setPopUpState] = useState(false);
+  const [popUpType, setPopUpType] = useState<EOurApproachPopUpsKeys | null>(null);
 
   const navLinks = [
     { path: '#about-team', text: 'Кто руководит' },
@@ -38,6 +45,16 @@ const AboutTeamPage = () => {
 
   const handleChangeOurApproachTheme = (theme: string) => {
     setSelectedOurApproachTheme(theme);
+  };
+
+  const handleOpenPopUp = (key: EOurApproachPopUpsKeys) => {
+    setPopUpState(true);
+    setPopUpType(key);
+  };
+
+  const handleClosePopUp = () => {
+    setPopUpState(false);
+    setPopUpType(null);
   };
 
   const ourApproachAnimationVariants = {
@@ -149,9 +166,23 @@ const AboutTeamPage = () => {
                 onAnimationStart={() => setOurApproachAnimationInProgress(true)}
                 onAnimationComplete={() => setOurApproachAnimationInProgress(false)}
               >
-                {ourApproachItems[selectedOurApproachTheme].map((item, index) => (
-                  <li key={'ourApproachItem_' + index}>{item}</li>
-                ))}
+                {ourApproachItems[selectedOurApproachTheme].map((item, index) => {
+                  if (typeof item !== 'string') {
+                    return (
+                      <li key={'ourApproachItem_' + index}>
+                        {'⋅ '}
+                        <button
+                          key={'ourApproachItem_' + index}
+                          className={'about-team-our-approach-btn'}
+                          onClick={() => handleOpenPopUp(EOurApproachPopUpsKeys.QUESTIONS)}
+                        >
+                          {item.text}
+                        </button>
+                      </li>
+                    );
+                  }
+                  return <li key={'ourApproachItem_' + index}>{item}</li>;
+                })}
               </m.ul>
             )}
           </AnimatePresence>
@@ -180,6 +211,7 @@ const AboutTeamPage = () => {
           </ul>
         </div>
       </section>
+      <QuestionsPopUp open={popUpState && popUpType === EOurApproachPopUpsKeys.QUESTIONS} setClose={handleClosePopUp} />
     </>
   );
 };
