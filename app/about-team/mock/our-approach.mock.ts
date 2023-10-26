@@ -1,5 +1,4 @@
-import { EOurApproachPopUpsKeys } from '@/app/about-team/page';
-
+import { EOurApproachPopUpsKeys } from '@/app/about-team/types/enums';
 export const ourApproachThemes = [
   '1. Понимание задачи',
   '2. Проблема',

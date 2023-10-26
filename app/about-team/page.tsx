@@ -11,10 +11,7 @@ import { useState } from 'react';
 import ScrollableSegmentedControl from '@/components/ScrollableSegmented';
 import { ourApproachItems, ourApproachThemes } from '@/app/about-team/mock/our-approach.mock';
 import QuestionsPopUp from '@/app/about-team/components/QuestionsPopUp';
-
-export enum EOurApproachPopUpsKeys {
-  QUESTIONS = 'QUESTIONS',
-}
+import { EOurApproachPopUpsKeys } from '@/app/about-team/types/enums';
 
 const AboutTeamPage = () => {
   const [selectedOurApproachTheme, setSelectedOurApproachTheme] = useState(ourApproachThemes[0]);
