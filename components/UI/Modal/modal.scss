@@ -1,0 +1,25 @@
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.modal-backdrop {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.78);
+  display: flex;
+  justify-content: center;
+
+  &--children-align-center {
+    align-items: center;
+  }
+
+  &--children-align-end {
+    align-items: flex-end;
+  }
+
+
+}
