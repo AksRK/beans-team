@@ -2,9 +2,10 @@
 import './page-nav.scss';
 import Segmented from '@/components/Segmented';
 import Button from '@/components/UI/Button';
-import { FC, useEffect, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
+import { DiscussFormVisibilityContext } from '@/components/Contexts/DiscussFormVisibility';
 
 interface IPageNav {
   isVisible: boolean;
@@ -12,6 +13,7 @@ interface IPageNav {
 }
 
 const PageNav: FC<IPageNav> = ({ isVisible, disabled }) => {
+  const { isVisibleDiscussForm, setIsVisibleDiscussForm } = useContext(DiscussFormVisibilityContext);
   const pathName = usePathname();
   const router = useRouter();
   const routes = [
@@ -70,7 +72,7 @@ const PageNav: FC<IPageNav> = ({ isVisible, disabled }) => {
             defaultSelected={selectedOption}
             onChange={followLink}
           >
-            <Button>Обсудить проект</Button>
+            <Button onClick={() => setIsVisibleDiscussForm(!isVisibleDiscussForm)}>Обсудить проект</Button>
           </Segmented>
         </motion.div>
       )}
