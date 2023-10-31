@@ -1,0 +1,60 @@
+@import "core/styles/mixins";
+
+.project-card {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(363px, 0.7fr));
+  min-height: 326px;
+  border-radius: 16px;
+  background: #F1F6F8;
+  box-shadow: 6px 6px 11px 0px rgba(51, 51, 51, 0.08);
+
+  @include tablet-small {
+    padding: 20px;
+    grid-template-columns: 1fr;
+  }
+
+  &__info {
+    padding: 32px 0 32px 32px;
+    width: 100%;
+
+    & p {
+      max-width: 375px;
+    }
+
+    @include tablet-small {
+      padding: 0;
+
+      & p {
+        max-width: 100%;
+      }
+    }
+  }
+
+  &__head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__title {
+    @include adaptiveFont(32, 18);
+    font-weight: 700;
+    margin: 0;
+  }
+
+  &__images-block {
+    position: relative;
+    height: 90%;
+    display: flex;
+    justify-content: center;
+
+    & svg {
+      height: 100%;
+    }
+
+    @include mobile {
+      margin-top: 30px;
+      max-height: 200px;
+    }
+  }
+}
