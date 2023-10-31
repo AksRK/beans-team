@@ -120,7 +120,7 @@ const DiscussFormModal = () => {
       transition: {
         y: {
           type: 'spring',
-          bounce: 0.35,
+          bounce: 0.4,
           duration: 0.8,
         },
       },
