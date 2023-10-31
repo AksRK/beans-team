@@ -10,6 +10,11 @@
     @content;
   }
 }
+@mixin tablet-small {
+  @media (max-width: $tablet-small-width) {
+    @content;
+  }
+}
 
 
 @mixin adaptiveFont($pcSize, $mobSize) {
