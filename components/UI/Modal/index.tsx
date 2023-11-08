@@ -27,11 +27,13 @@ const Modal: FC<ModalProps> = ({ open, setClose, children, childrenAlign = 'cent
     if (!open && openModalCount > 0) {
       openModalCount--;
     }
-
     if (body && openModalCount > 0) {
-      body?.classList.add('overflow-hidden');
-    } else {
-      body?.classList.remove('overflow-hidden');
+      body.style.overflow = 'hidden';
+      body.style.height = '100vh';
+    }
+    if (body && !open && openModalCount === 0) {
+      body.style.overflow = 'visible';
+      body.style.height = 'auto';
     }
   }, [open]);
 
