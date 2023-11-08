@@ -18,6 +18,13 @@ ul {
 
 body {
   background: #333333;
+  scroll-behavior: smooth;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .large-container {
@@ -35,12 +42,21 @@ body {
 }
 
 .main {
+  position: relative;
+  transform-origin: top;
   min-height: 101vh;
   background: white;
-  transform-origin: top;
   padding-bottom: 120px;
+
+  &--view-footer {
+    bottom: 30px;
+  }
 
   @include mobile {
     padding-bottom: 20px;
+  }
+
+  &--hidden {
+    overflow: hidden;
   }
 }

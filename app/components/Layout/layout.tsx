@@ -1,16 +1,17 @@
 'use client';
 import './layout.scss';
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { ReactNode, useContext, useEffect, useRef } from 'react';
 import Home from '@/app/page';
 import AboutTeamPage from '@/app/about-team/page';
 import Header from '@/components/Header';
-import { m, AnimatePresence, useInView, LazyMotion, domAnimation } from 'framer-motion';
+import { m, motion, AnimatePresence, useInView, LazyMotion, domAnimation, useWillChange } from 'framer-motion';
 import { usePathname } from 'next/navigation';
 import Footer from '@/components/Footer';
 import SolutionsPage from '@/app/solutions/page';
 import PageNav from '@/components/PageNav';
 import ModalContainer from '@/components/UI/ModalContainer';
 import DiscussFormModal from '@/components/DiscussFormModal';
+import { PageTransitionContext } from '@/components/Contexts/PageTransition';
 
 export default function RootClientLayout({ children }: { children: ReactNode }) {
   const footerRef = useRef<HTMLDivElement>(null);
@@ -18,7 +19,8 @@ export default function RootClientLayout({ children }: { children: ReactNode }) 
   const markRef = useRef<HTMLDivElement>(null);
   const markInView = useInView(markRef);
   const pathName = usePathname();
-  const [isStartAnimation, setIsStartAnimation] = useState(false);
+  const { isAnimationPlay, setIsAnimationPlay } = useContext(PageTransitionContext);
+  const willChange = useWillChange();
 
   const routes = [
     { path: '/', component: <Home /> },
@@ -29,38 +31,54 @@ export default function RootClientLayout({ children }: { children: ReactNode }) 
   const animatedRoutes = routes.map(route => route.path);
 
   useEffect(() => {
-    if (pageWrpRef.current) {
-      pageWrpRef.current.scroll(0, 0);
-    }
     window.scroll(0, 0);
   }, [pathName]);
+
+  useEffect(() => {
+    const body = document.querySelector('body');
+
+    if (body && isAnimationPlay) {
+      body.style.overflow = 'hidden';
+      body.style.height = '100vh';
+    }
+    if (body && !isAnimationPlay) {
+      body.style.overflow = 'visible';
+      body.style.height = 'auto';
+    }
+  }, [isAnimationPlay]);
 
   const variants = {
     initial: {
       y: '100vh',
-      borderRadius: '40px',
-      transition: {
-        duration: 0,
-      },
+      borderRadius: '30px',
     },
     animate: {
-      borderRadius: 0,
       y: 0,
+      borderRadius: 0,
       transition: {
-        y: { duration: 0.7 },
-        borderRadius: { duration: 0.5, delay: 0.3 },
+        borderRadius: {
+          duration: 0.2,
+          delay: 0.7,
+        },
+        y: { duration: 0.3, delay: 0.4 },
       },
     },
     exit: {
-      opacity: 0.1,
+      origin: '-50%',
+      opacity: 0.5,
+      scale: 0.9,
+      maxHeight: '50vh',
+      overflow: 'hidden',
       borderRadius: '30px',
-      y: '170px',
       transition: {
-        duration: 0.7,
-        borderRadius: {
+        duration: 0.8,
+        scale: {
           duration: 0.3,
         },
-        ease: 'easeInOut',
+        borderRadius: { duration: 0.1 },
+        opacity: {
+          duration: 0.5,
+        },
       },
     },
   };
@@ -70,9 +88,7 @@ export default function RootClientLayout({ children }: { children: ReactNode }) 
       <div
         id={'page'}
         ref={pageWrpRef}
-        className={`page-wrp ${isStartAnimation ? 'page-wrp--hidden' : ''} ${
-          markInView ? 'page-wrp--view-footer' : ''
-        }`}
+        className={`page-wrp ${markInView && !isAnimationPlay ? 'page-wrp--view-footer' : ''}`}
       >
         <LazyMotion features={domAnimation}>
           <AnimatePresence initial={false} mode={'popLayout'}>
@@ -80,12 +96,17 @@ export default function RootClientLayout({ children }: { children: ReactNode }) 
               <m.main
                 key={pathName}
                 variants={variants}
-                initial="initial"
+                initial={'initial'}
                 animate={'animate'}
                 exit={'exit'}
-                className={'main'}
-                onAnimationStart={() => setIsStartAnimation(true)}
-                onAnimationComplete={() => setIsStartAnimation(false)}
+                style={{ willChange }}
+                className={`main`}
+                onAnimationStart={() => setIsAnimationPlay(true)}
+                onAnimationComplete={() => {
+                  setTimeout(() => {
+                    setIsAnimationPlay(false);
+                  }, 100);
+                }}
               >
                 <Header />
                 {routes.find(route => route.path === pathName)?.component}
@@ -98,10 +119,20 @@ export default function RootClientLayout({ children }: { children: ReactNode }) 
             )}
           </AnimatePresence>
         </LazyMotion>
-        <div ref={markRef} className={'page-wrp__mark'}></div>
+        <AnimatePresence>
+          {markInView && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className={'page-blackout'}
+            ></motion.div>
+          )}
+        </AnimatePresence>
       </div>
+      <div ref={markRef} className={'page-wrp__mark'}></div>
       <Footer ref={footerRef} isVisible={markInView} />
-      <PageNav isVisible={!markInView} disabled={isStartAnimation} />
+      <PageNav isVisible={!markInView} disabled={isAnimationPlay} />
       <DiscussFormModal />
       <ModalContainer />
     </>
