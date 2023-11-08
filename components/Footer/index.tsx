@@ -16,8 +16,8 @@ const Footer = forwardRef<HTMLDivElement, IFooterProps>(({ isVisible }, forwarde
         <div className={'large-container'}>
           <motion.footer
             ref={forwardedRef}
-            animate={isVisible ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: isVisible ? 2 : 0 }}
+            animate={isVisible ? { y: 0 } : { y: 200 }}
+            transition={{ duration: 0.3 }}
             className={'footer'}
           >
             <div className={'founders-help'}>
