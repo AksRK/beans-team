@@ -27,16 +27,15 @@ const AboutTeamPage = () => {
   ];
 
   const handleScrollToSection = (sectionId: string) => {
-    const page = document.querySelector('#page');
-    const section = page?.querySelector(sectionId);
-    if (section && page) {
+    const section = document?.querySelector(sectionId);
+    if (section) {
       const sectionRect = section.getBoundingClientRect();
-      const marginTop = 80;
+      const marginTop = 60;
       const options: ScrollToOptions = {
         top: sectionRect.top - marginTop,
         behavior: 'smooth',
       };
-      page.scrollTo(options);
+      window.scrollTo(options);
     }
   };
 
