@@ -48,16 +48,22 @@ const HowWeWork = () => {
             }}
           >
             <div>
-              <span>Проверяем</span> гипотезы, после чего улучшаем и развиваем работающую систему.
-              <br />
+              <span>Предоставим</span> минимальную команду и поставим ей задачу
+              {isTheirMethod ? <span className={'how-we-work-list__red-text'}>?</span> : '.'}
+            </div>
+            <div>
+              <span>Определим</span> минимальный бюджет
+              {isTheirMethod ? <span className={'how-we-work-list__red-text'}>?</span> : '.'}
               <AnimatePresence>
                 {isTheirMethod && (
                   <m.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 'auto', opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
+                    initial={{ height: 0, opacity: 0, marginTop: '0px' }}
+                    animate={{ height: 'auto', opacity: 1, marginTop: '20px' }}
+                    exit={{ height: 0, opacity: 0, marginTop: '0px' }}
                   >
-                    <div className={'how-we-work-list__red-text'}>КАК?? Хаааааааоооооооос!!!</div>
+                    <div className={'how-we-work-list__red-text'}>
+                      Нет, мы составим план максимум, чтоб заработать как можно больше. ¯\_(ツ)_/¯
+                    </div>
                   </m.div>
                 )}
               </AnimatePresence>
@@ -98,22 +104,16 @@ const HowWeWork = () => {
             }}
           >
             <div>
-              <span>Предоставим</span> минимальную команду и поставим ей задачу
-              {isTheirMethod ? <span className={'how-we-work-list__red-text'}>?</span> : '.'}
-            </div>
-            <div>
-              <span>Определим</span> минимальный бюджет
-              {isTheirMethod ? <span className={'how-we-work-list__red-text'}>?</span> : '.'}
+              <span>Проверяем</span> гипотезы, после чего улучшаем и развиваем работающую систему.
+              <br />
               <AnimatePresence>
                 {isTheirMethod && (
                   <m.div
-                    initial={{ height: 0, opacity: 0, marginTop: '0px' }}
-                    animate={{ height: 'auto', opacity: 1, marginTop: '20px' }}
-                    exit={{ height: 0, opacity: 0, marginTop: '0px' }}
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: 'auto', opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
                   >
-                    <div className={'how-we-work-list__red-text'}>
-                      Нет, мы составим план максимум, чтоб заработать как можно больше. ¯\_(ツ)_/¯
-                    </div>
+                    <div className={'how-we-work-list__red-text'}>КАК?? Хаааааааоооооооос!!!</div>
                   </m.div>
                 )}
               </AnimatePresence>
