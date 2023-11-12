@@ -162,7 +162,7 @@ const DiscussFormModal = () => {
             </button>
           </div>
           <div className={'discuss-form-modal__body'}>
-            <Title>Наша команда готова стартовать ваш проект в ближайший понедельник</Title>
+            <Title>Наша команда готова стартовать ваш проект</Title>
             <form onSubmit={handleSubmit(onSubmit)}>
               <FormItem
                 name={'projectDescription'}
