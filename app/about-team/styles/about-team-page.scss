@@ -145,9 +145,11 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    min-height: 360px;
 
     @include mobile {
       gap: 7px;
+      min-height: 260px;
     }
   }
 
