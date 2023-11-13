@@ -1,5 +1,5 @@
 'use client';
-import './styles/_about-team-page.scss';
+import './styles/about-team-page.scss';
 import Title from '@/components/UI/Title';
 import Link from 'next/link';
 import Image from 'next/image';
